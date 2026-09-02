@@ -1,17 +1,19 @@
-from .db import db
-from datetime import datetime
-from sqlalchemy import Integer, String, DateTime
+from .db import db, Base
+from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 
-class Order(db.Model):
+class Order(Base, db.Model):
     __tablename__ = "orders"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String(255), nullable=False)
-    created_at: Mapped[str] = mapped_column(
-        String, default=datetime.now().isoformat(), nullable=False
-    )
+    user_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    thumbnail_url: Mapped[str] = mapped_column(String)
+
+    def __init__(self, name: str):
+        super().__init__(name)
 
     def to_dict(self):
-        return {"id": self.id, "name": self.name, "created_at": self.created_at}
+        return {
+            **super().to_dict(),
+            "thumbnail_url": self.thumbnail_url,
+        }
