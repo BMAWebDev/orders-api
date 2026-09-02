@@ -28,9 +28,6 @@ class NamelessBase(DeclarativeBase):
         sort_order=20,
     )
 
-    def __init__(self):
-        super().__init__()
-
     def to_dict(self):
         return {
             "id": self.id,
