@@ -12,8 +12,8 @@ class OrderProduct(db.Model):
     __tablename__ = "order_products"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
-    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"))
-    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"))
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), nullable=False)
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"), nullable=False)
 
     order: Mapped["Order"] = relationship(back_populates="products")
     product: Mapped["Product"] = relationship(back_populates="order_products")

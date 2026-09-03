@@ -1,18 +1,23 @@
 from .db import db, Base
+from typing import TYPE_CHECKING
 from pydantic import BaseModel
-from sqlalchemy import Integer
+from sqlalchemy import Integer, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .order_products import OrderProduct
+
+if TYPE_CHECKING:
+    from .users import User
 
 
 class Order(Base, db.Model):
     __tablename__ = "orders"
 
-    # user_id: Mapped[int] = mapped_column(
-    #     Integer,
-    #     nullable=False,
-    # )
-    # product_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    user: Mapped["User"] = relationship(back_populates="order")
 
     products: Mapped[list["OrderProduct"]] = relationship(back_populates="order")
 
