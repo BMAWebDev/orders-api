@@ -5,6 +5,8 @@ from pydantic import ValidationError
 from models.db import db
 from models.orders_models import Order, AddOrderPayload
 
+from utils.responses import get_payload_missing_fields_error
+
 orders_bp = Blueprint("orders", __name__, url_prefix="/orders")
 
 
@@ -21,10 +23,7 @@ def add_order():
     try:
         payload = AddOrderPayload.model_validate(request.get_json())
     except ValidationError as e:
-        return (
-            f"Missing fields: {', '.join([str(err.get('loc')[0]) for err in e.errors()])}.",
-            400,
-        )
+        return get_payload_missing_fields_error(e)
 
     new_order = Order(name=payload.name)
 
