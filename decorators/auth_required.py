@@ -1,5 +1,5 @@
 from flask import current_app, request
-from jwt import decode, ExpiredSignatureError
+from jwt import decode, ExpiredSignatureError, InvalidSignatureError
 from functools import wraps
 
 from utils import responses
@@ -15,7 +15,7 @@ def auth_required(func):
         try:
             if not request.authorization or not request.authorization.token:
                 return responses.get_base_response(
-                    "Sorry, but you are not allowed to make this request", 401
+                    "No authentication token was present on request", 401
                 )
 
             decode(
@@ -26,8 +26,10 @@ def auth_required(func):
 
             return func(*args, **kwargs)
 
-        except ExpiredSignatureError as e:
-            print("error")
-            return e
+        except InvalidSignatureError:
+            return responses.get_base_response("Invalid token", 401)
+
+        except ExpiredSignatureError:
+            return responses.get_base_response("Session expired", 401)
 
     return handle_auth_required
