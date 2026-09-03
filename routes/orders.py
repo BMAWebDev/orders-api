@@ -3,7 +3,7 @@ from sqlalchemy import select
 from pydantic import ValidationError
 
 from models.db import db
-from models.orders_models import Order, AddOrderPayload
+from models.orders import Order, AddOrderPayload
 
 from utils.responses import get_payload_missing_fields_error
 

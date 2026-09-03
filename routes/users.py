@@ -6,8 +6,8 @@ from jwt import encode
 
 from constants.validators import EMAIL_REGEX, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH
 from models.db import db
-from models.users_models import User
-from models.users_models import RegisterUserPayload, User, LoginUserPayload
+from models.users import User
+from models.users import RegisterUserPayload, User, LoginUserPayload
 from utils import responses
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")

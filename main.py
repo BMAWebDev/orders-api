@@ -31,8 +31,8 @@ with app.app_context():
         """
         Import these in order to let SQLAlchemy know which tables should be created
         """
-        from models.orders_models import Order
-        from models.users_models import User
+        from models.orders import Order
+        from models.users import User
 
         db.create_all()
 

@@ -1,5 +1,5 @@
-from .orders_routes import orders_bp
-from .users_routes import users_bp
+from .orders import orders_bp
+from .users import users_bp
 from flask import Flask
 
 
