@@ -7,10 +7,13 @@ from models.orders_models import Order, AddOrderPayload
 
 from utils.responses import get_payload_missing_fields_error
 
+from decorators.auth_required import auth_required
+
 orders_bp = Blueprint("orders", __name__, url_prefix="/orders")
 
 
 @orders_bp.get("")
+@auth_required
 def get_orders():
     items = db.session.execute(select(Order)).scalars()
 
@@ -18,6 +21,7 @@ def get_orders():
 
 
 @orders_bp.post("/add")
+@auth_required
 def add_order():
     print("add")
     try:
