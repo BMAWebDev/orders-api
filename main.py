@@ -33,6 +33,8 @@ with app.app_context():
         """
         from models.orders import Order
         from models.users import User
+        from models.products import Product
+        from models.order_products import OrderProduct
 
         db.create_all()
 
